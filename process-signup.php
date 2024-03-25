@@ -24,11 +24,11 @@ if ($_POST["password"] !== $_POST["password_confirmation"]) {
     die("Passwords must match");
 }
 
-$password_hash = password_hash($_POST["password"], PASSWORD_DEFAULT);
+$password_hash = $password($_POST["password"], PASSWORD_DEFAULT);
 
-$mysqli = require __DIR__ . "/database.php";
+$mysqli = require __DIR__ . "/pdo_connection.php";
 
-$sql = "INSERT INTO user (name, email, password_hash)
+$sql = "INSERT INTO user (name, email, password)
         VALUES (?, ?, ?)";
         
 $stmt = $mysqli->stmt_init();
@@ -55,11 +55,3 @@ if ($stmt->execute()) {
         die($mysqli->error . " " . $mysqli->errno);
     }
 }
-
-
-
-
-
-
-
-
